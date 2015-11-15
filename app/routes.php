@@ -6,7 +6,7 @@ use WebLinks\Form\Type\LinkType;
 
 // Home page
 $app->match('/', function (Request $request) use ($app) {
-    $links = $app['dao.link']->findAll();
+    //$links = $app['dao.link']->findAll();
     $linkFormView = null;
     if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
         // A user is fully authenticated : he can add links
@@ -21,6 +21,7 @@ $app->match('/', function (Request $request) use ($app) {
         }
         $linkFormView = $linkForm->createView();
     }
+    $links = $app['dao.link']->findAll();
     return $app['twig']->render('index.html.twig', array('links' => $links, 'linkForm' => $linkFormView));
 })->bind('home');
 
