@@ -1,6 +1,6 @@
 <?php
 
-namespace MicroCMS\Domain;
+namespace WebLinks\Domain;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 

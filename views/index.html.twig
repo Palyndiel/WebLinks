@@ -17,11 +17,11 @@
         </div>
     {% endif %}
 
-    <h3>Add a comment</h3>
+    <h3>Add a link</h3>
     {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
         Soon!
     {% else %}
-        <a href="{{ path('login') }} ">Log in</a> to add comments.
+        <a href="{{ path('login') }} ">Log in</a> to add links.
     {% endif %}
-    
+
 {% endblock %}

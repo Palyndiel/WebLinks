@@ -1,12 +1,12 @@
 <?php
 
-namespace MicroCMS\DAO;
+namespace WebLinks\DAO;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use MicroCMS\Domain\User;
+use WebLinks\Domain\User;
 
 class UserDAO extends DAO implements UserProviderInterface
 {
@@ -15,10 +15,10 @@ class UserDAO extends DAO implements UserProviderInterface
      *
      * @param integer $id The user id.
      *
-     * @return \MicroCMS\Domain\User|throws an exception if no matching user is found
+     * @return \WebLinks\Domain\User|throws an exception if no matching user is found
      */
     public function find($id) {
-        $sql = "select * from t_user where usr_id=?";
+        $sql = "select * from t_user where user_id=?";
         $row = $this->getDb()->fetchAssoc($sql, array($id));
 
         if ($row)
@@ -32,7 +32,7 @@ class UserDAO extends DAO implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        $sql = "select * from t_user where usr_name=?";
+        $sql = "select * from t_user where user_name=?";
         $row = $this->getDb()->fetchAssoc($sql, array($username));
 
         if ($row)
@@ -58,22 +58,22 @@ class UserDAO extends DAO implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return 'MicroCMS\Domain\User' === $class;
+        return 'WebLinks\Domain\User' === $class;
     }
 
     /**
      * Creates a User object based on a DB row.
      *
      * @param array $row The DB row containing User data.
-     * @return \MicroCMS\Domain\User
+     * @return \WebLinks\CMS\Domain\User
      */
     protected function buildDomainObject($row) {
         $user = new User();
-        $user->setId($row['usr_id']);
-        $user->setUsername($row['usr_name']);
-        $user->setPassword($row['usr_password']);
-        $user->setSalt($row['usr_salt']);
-        $user->setRole($row['usr_role']);
+        $user->setId($row['user_id']);
+        $user->setUsername($row['user_name']);
+        $user->setPassword($row['user_password']);
+        $user->setSalt($row['user_salt']);
+        $user->setRole($row['user_role']);
         return $user;
     }
 }

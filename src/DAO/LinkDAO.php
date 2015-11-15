@@ -7,7 +7,7 @@ use WebLinks\Domain\Link;
 class LinkDAO extends DAO 
 {
     /**
-     * @var \MicroCMS\DAO\UserDAO
+     * @var \WebLinks\DAO\UserDAO
      */
     private $userDAO;
 
@@ -49,7 +49,7 @@ class LinkDAO extends DAO
             // Find and set the associated author
             $userId = $row['user_id'];
             $user = $this->userDAO->find($userId);
-            $comment->setAuthor($user);
+            $link->setAuthor($user);
         }
 
         

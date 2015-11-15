@@ -22,14 +22,18 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
             'logout' => true,
             'form' => array('login_path' => '/login', 'check_path' => '/login_check'),
             'users' => $app->share(function () use ($app) {
-                return new MicroCMS\DAO\UserDAO($app['db']);
+                return new WebLinks\DAO\UserDAO($app['db']);
             }),
         ),
     ),
 ));
 
 // Register services
+$app['dao.user'] = $app->share(function ($app) {
+    return new WebLinks\DAO\UserDAO($app['db']);
+});
 $app['dao.link'] = $app->share(function ($app) {
     $linkDAO = new WebLinks\DAO\LinkDAO($app['db']);
+    $linkDAO->setUserDAO($app['dao.user']);
     return $linkDAO;
 });

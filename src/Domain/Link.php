@@ -28,7 +28,7 @@ class Link
     /**
      * Link author.
      *
-     * @var \MicroCMS\Domain\User
+     * @var \WebLinks\Domain\User
      */
     private $author;
 
@@ -54,6 +54,10 @@ class Link
 
     public function setUrl($url) {
         $this->url = $url;
+    }
+
+    public function getAuthor() {
+        return $this->author;
     }
 
     public function setAuthor(User $author) {

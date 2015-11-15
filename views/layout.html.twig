@@ -20,8 +20,26 @@
                     </button>
                     <a class="navbar-brand" href="{{ path('home')}}">WebLinks</a>
                 </div>
-                <div class="collapse navbar-collapse" id="navbar-collapse-target">
-                    
+                <div class="collapse navbar-collapse" id="navbar-collapse-target">                 
+                <ul class="nav navbar-nav navbar-right">
+                        {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-user"></span> Welcome, {{ app.user.username }} <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('logout') }}">Log out</a></li>
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-user"></span> Not connected <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('login') }}">Log in</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                    </ul>
                 </div>
             </div><!-- /.container -->
         </nav>
