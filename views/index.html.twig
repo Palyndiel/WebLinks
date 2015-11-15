@@ -7,7 +7,7 @@
         <div class="list-group">
             {% for link in links %}
                 <a href="{{ link.url }}" class="list-group-item">{{ link.title }}
-                <span class="small">Submitted by ?</span>
+                <span class="small">Submitted by {{link.author.username}}</span>
                 </a>
             {% endfor %}
         </div>
@@ -16,4 +16,12 @@
             No links found.
         </div>
     {% endif %}
+
+    <h3>Add a comment</h3>
+    {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
+        Soon!
+    {% else %}
+        <a href="{{ path('login') }} ">Log in</a> to add comments.
+    {% endif %}
+    
 {% endblock %}

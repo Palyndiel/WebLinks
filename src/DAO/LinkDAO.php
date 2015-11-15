@@ -7,6 +7,15 @@ use WebLinks\Domain\Link;
 class LinkDAO extends DAO 
 {
     /**
+     * @var \MicroCMS\DAO\UserDAO
+     */
+    private $userDAO;
+
+    public function setUserDAO(UserDAO $userDAO) {
+        $this->userDAO = $userDAO;
+    }
+
+    /**
      * Returns a list of all links, sorted by id.
      *
      * @return array A list of all links.
@@ -35,6 +44,14 @@ class LinkDAO extends DAO
         $link->setId($row['link_id']);
         $link->setTitle($row['link_title']);
         $link->setUrl($row['link_url']);
+
+        if (array_key_exists('user_id', $row)) {
+            // Find and set the associated author
+            $userId = $row['user_id'];
+            $user = $this->userDAO->find($userId);
+            $comment->setAuthor($user);
+        }
+
         
         return $link;
     }
