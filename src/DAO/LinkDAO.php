@@ -76,7 +76,17 @@ class LinkDAO extends DAO
             $link->setAuthor($user);
         }
 
-        
         return $link;
     }
+
+     /**
+     * Removes a link from the database.
+     *
+     * @param integer $id The link id.
+     */
+    public function delete($id) {
+        // Delete the article
+        $this->getDb()->delete('t_link', array('link_id' => $id));
+    }
+
 }
