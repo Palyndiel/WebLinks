@@ -5,6 +5,20 @@ use Symfony\Component\HttpFoundation\Request;
 // Home page
 $app->get('/', function () use ($app) {
     $links = $app['dao.link']->findAll();
+    $linkFormView = null;
+    if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
+        // A user is fully authenticated : he can add links
+        $link = new Link();
+        $user = $app['user'];
+        $link->setAuthor($user);
+        $linkForm = $app['form.factory']->create(new LinkType(), $link);
+        $linkForm->handleRequest($request);
+        if ($linkForm->isSubmitted() && $linkForm->isValid()) {
+            $app['dao.link']->save($link);
+            $app['session']->getFlashBag()->add('success', 'Your link was succesfully added.');
+        }
+        $linkFormView = $linkForm->createView();
+    }
     return $app['twig']->render('index.html.twig', array('links' => $links));
 })->bind('home');
 
