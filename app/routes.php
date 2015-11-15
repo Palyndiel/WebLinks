@@ -45,6 +45,8 @@ $app->get('/admin', function() use ($app) {
 // Add a new link
 $app->match('/admin/link/add', function(Request $request) use ($app) {
     $link = new Link();
+    $user = $app['user'];
+    $link->setAuthor($user);
     $linkForm = $app['form.factory']->create(new LinkType(), $link);
     $linkForm->handleRequest($request);
     if ($linkForm->isSubmitted() && $linkForm->isValid()) {
