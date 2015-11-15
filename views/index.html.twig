@@ -18,8 +18,30 @@
     {% endif %}
 
     <h3>Add a link</h3>
-    {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
-        Soon!
+    {% if linkForm %}
+        {{ form_start(linkForm) }}
+            <div class="form-group">
+                {{ form_errors(linkForm.content) }}
+                {{ form_widget(linkForm.title, { 'attr':  {
+                    'rows': '4',
+                    'class': 'form-control',
+                    'placeholder': 'Enter your title'
+                }}) }}
+                {{ form_widget(linkForm.url, { 'attr':  {
+                    'rows': '4',
+                    'class': 'form-control',
+                    'placeholder': 'Enter your URL'
+                }}) }}
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Publish link" />
+            </div>
+        {{ form_end(linkForm) }}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
     {% else %}
         <a href="{{ path('login') }} ">Log in</a> to add links.
     {% endif %}
