@@ -1,9 +1,11 @@
 <?php
 
 use Symfony\Component\HttpFoundation\Request;
+use WebLinks\Domain\Link;
+use WebLinks\Form\Type\LinkType;
 
 // Home page
-$app->get('/', function () use ($app) {
+$app->match('/', function (Request $request) use ($app) {
     $links = $app['dao.link']->findAll();
     $linkFormView = null;
     if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -19,7 +21,7 @@ $app->get('/', function () use ($app) {
         }
         $linkFormView = $linkForm->createView();
     }
-    return $app['twig']->render('index.html.twig', array('links' => $links));
+    return $app['twig']->render('index.html.twig', array('links' => $links, 'linkForm' => $linkFormView));
 })->bind('home');
 
 // Login form

@@ -21,14 +21,15 @@
     {% if linkForm %}
         {{ form_start(linkForm) }}
             <div class="form-group">
-                {{ form_errors(linkForm.content) }}
+                {{ form_errors(linkForm.title) }}
+                {{ form_errors(linkForm.url) }}
                 {{ form_widget(linkForm.title, { 'attr':  {
-                    'rows': '4',
+                    'rows': '1',
                     'class': 'form-control',
                     'placeholder': 'Enter your title'
                 }}) }}
                 {{ form_widget(linkForm.url, { 'attr':  {
-                    'rows': '4',
+                    'rows': '1',
                     'class': 'form-control',
                     'placeholder': 'Enter your URL'
                 }}) }}
