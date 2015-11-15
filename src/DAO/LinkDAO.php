@@ -33,6 +33,30 @@ class LinkDAO extends DAO
         return $entities;
     }
 
+     /**
+     * Saves a link into the database.
+     *
+     * @param \WebLinks\Domain\Link $comment The comment to save
+     */
+    public function save(Link $link) {
+        $linkData = array(
+            'usr_id' => $comment->getAuthor()->getId(),
+            'link_title' => $link->getTitle(),
+            'link_url' => $link->getUrl()
+            );
+
+        if ($link->getId()) {
+            // The comment has already been saved : update it
+            $this->getDb()->update('t_title, t_url', $linkData, array('link_id' => $link->getId()));
+        } else {
+            // The comment has never been saved : insert it
+            $this->getDb()->insert('t_title, t_url', $linkData);
+            // Get the id of the newly created comment and set it on the entity.
+            $id = $this->getDb()->lastInsertId();
+            $link->setId($id);
+        }
+    }
+
     /**
      * Creates an Link object based on a DB row.
      *
